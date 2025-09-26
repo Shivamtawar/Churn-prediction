@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+        
+        .tab-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tab-btn.active {
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result.high {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+        
+        .result.medium {
+            background: linear-gradient(135deg, #ffa726, #ff7043);
+            color: white;
+        }
+        
+        .result.low {
+            background: linear-gradient(135deg, #66bb6a, #43a047);
+            color: white;
+        }
+        
+        .result h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .detail-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .detail-item h4 {
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+        
+        .detail-item .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .insights {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .insights ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .insights li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .insights li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .file-upload {
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            background: #f0f2ff;
+            border-color: #5a6fd8;
+        }
+        
+        .file-upload.dragover {
+            background: #e8ebff;
+            border-color: #4c63d2;
+            transform: scale(1.02);
+        }
+        
+        #csvData {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            min-height: 200px;
+            background: #f8f9fa;
+        }
+        
+        .error {
+            background: #ff4757;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .batch-results {
+            margin-top: 30px;
+        }
+        
+        .batch-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-card {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+        }
+        
+        .summary-card.high {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+        
+        .summary-card.medium {
+            background: linear-gradient(135deg, #ffa726, #ff7043);
+        }
+        
+        .summary-card.low {
+            background: linear-gradient(135deg, #66bb6a, #43a047);
+        }
+        
+        .summary-card h4 {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .summary-card .count {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Churn Prediction System</h1>
+            <p>AI-Powered Customer Retention Analytics</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('single')">Single Customer</button>
+            <button class="tab-btn" onclick="switchTab('batch')">Batch Analysis</button>
+        </div>
+        
+        <!-- Single Customer Prediction -->
+        <div id="single" class="tab-content active">
+            <div class="card">
+                <h2>Customer Information</h2>
+                <form id="customerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tenure">Tenure (months)</label>
+                            <input type="number" id="tenure" name="Tenure" min="0" max="61" step="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="satisfaction">Satisfaction Score (1-5)</label>
+                            <select id="satisfaction" name="SatisfactionScore" required>
+                                <option value="">Select...</option>
+                                <option value="1">1 - Very Unsatisfied</option>
+                                <option value="2">2 - Unsatisfied</option>
+                                <option value="3">3 - Neutral</option>
+                                <option value="4">4 - Satisfied</option>
+                                <option value="5">5 - Very Satisfied</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="orders">Number of Orders</label>
+                            <input type="number" id="orders" name="OrderCount" min="0" max="16" step="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appHours">App Usage (hours/day)</label>
+                            <input type="number" id="appHours" name="HourSpendOnApp" min="0" max="5" step="0.1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="daysSince">Days Since Last Order</label>
+                            <input type="number" id="daysSince" name="DaySinceLastOrder" min="0" max="46" step="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="warehouse">Warehouse Distance (km)</label>
+                            <input type="number" id="warehouse" name="WarehouseToHome" min="5" max="127" step="1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="devices">Registered Devices</label>
+                            <input type="number" id="devices" name="NumberOfDeviceRegistered" min="1" max="6" step="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="addresses">Number of Addresses</label>
+                            <input type="number" id="addresses" name="NumberOfAddress" min="1" max="22" step="1" value="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="orderHike">Order Amount Growth (%)</label>
+                            <input type="number" id="orderHike" name="OrderAmountHikeFromlastYear" min="0" max="26" step="1" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="coupons">Coupons Used</label>
+                            <input type="number" id="coupons" name="CouponUsed" min="0" max="16" step="1" value="0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cashback">Cashback Amount</label>
+                            <input type="number" id="cashback" name="CashbackAmount" min="0" max="324" step="1" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="complain">Has Complained?</label>
+                            <select id="complain" name="Complain">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="loginDevice">Preferred Login Device</label>
+                            <select id="loginDevice" name="PreferredLoginDevice">
+                                <option value="0">Mobile Phone</option>
+                                <option value="1">Computer</option>
+                                <option value="2">Phone</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cityTier">City Tier</label>
+                            <select id="cityTier" name="CityTier">
+                                <option value="1">Tier 1 (Metro)</option>
+                                <option value="2">Tier 2</option>
+                                <option value="3">Tier 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentMode">Preferred Payment</label>
+                            <select id="paymentMode" name="PreferredPaymentMode">
+                                <option value="0">Debit Card</option>
+                                <option value="1">UPI</option>
+                                <option value="2">Credit Card</option>
+                                <option value="3">Cash on Delivery</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" name="Gender">
+                                <option value="0">Female</option>
+                                <option value="1">Male</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="marital">Marital Status</label>
+                            <select id="marital" name="MaritalStatus">
+                                <option value="0">Single</option>
+                                <option value="1">Married</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Preferred Category</label>
+                            <select id="category" name="PreferedOrderCat">
+                                <option value="0">Laptop & Accessory</option>
+                                <option value="1">Mobile Phone</option>
+                                <option value="2">Others</option>
+                                <option value="3">Fashion</option>
+                                <option value="4">Grocery</option>
+                                <option value="5">Books</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="predictBtn">
+                        <span id="predictText">Predict Churn Risk</span>
+                    </button>
+                </form>
+                
+                <div id="singleResult"></div>
+            </div>
+        </div>
+        
+        <!-- Batch Analysis -->
+        <div id="batch" class="tab-content">
+            <div class="card">
+                <h2>Batch Customer Analysis</h2>
+                <p style="margin-bottom: 20px; color: #666;">Upload a CSV file or paste customer data for bulk analysis</p>
+                
+                <div class="file-upload" id="fileUpload">
+                    <div style="font-size: 48px; margin-bottom: 15px; color: #667eea;">📁</div>
+                    <h3>Drop CSV file here or click to browse</h3>
+                    <p style="color: #666; margin-top: 10px;">Supports CSV files with customer data</p>
+                    <input type="file" id="csvFile" accept=".csv" style="display: none;">
+                </div>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <label for="csvData">Or paste CSV data:</label>
+                    <textarea id="csvData" placeholder="Paste your CSV data here...&#10;&#10;Example:&#10;Tenure,SatisfactionScore,OrderCount,HourSpendOnApp,DaySinceLastOrder,WarehouseToHome,Complain&#10;12,3,6,2.0,8,15,0&#10;2,2,1,0.5,30,25,1"></textarea>
+                </div>
+                
+                <button type="button" class="btn" id="batchPredictBtn" onclick="processBatchData()">
+                    <span id="batchPredictText">Analyze Batch Data</span>
+                </button>
+                
+                <div id="batchResult"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:5000/api';
+        
+        // Tab switching
+        function switchTab(tabName) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        // File upload handling
+        const fileUpload = document.getElementById('fileUpload');
+        const csvFile = document.getElementById('csvFile');
+        const csvData = document.getElementById('csvData');
+        
+        fileUpload.addEventListener('click', () => csvFile.click());
+        fileUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUpload.classList.add('dragover');
+        });
+        fileUpload.addEventListener('dragleave', () => {
+            fileUpload.classList.remove('dragover');
+        });
+        fileUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUpload.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type === 'text/csv') {
+                handleFileUpload(files[0]);
+            }
+        });
+        
+        csvFile.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+        
+        function handleFileUpload(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                csvData.value = e.target.result;
+            };
+            reader.readAsText(file);
+        }
+        
+        // Single customer prediction
+        document.getElementById('customerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const customerData = {};
+            
+            // Convert form data to object with proper types
+            for (let [key, value] of formData.entries()) {
+                customerData[key] = isNaN(value) ? value : Number(value);
+            }
+            
+            await makePrediction(customerData);
+        });
+        
+        async function makePrediction(data) {
+            const predictBtn = document.getElementById('predictBtn');
+            const predictText = document.getElementById('predictText');
+            const resultDiv = document.getElementById('singleResult');
+            
+            // Show loading state
+            predictBtn.disabled = true;
+            predictText.innerHTML = '<span class="loading"></span>Analyzing...';
+            resultDiv.innerHTML = '';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/predict`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    displaySingleResult(result);
+                } else {
+                    displayError(result.error);
+                }
+            } catch (error) {
+                displayError('Network error: ' + error.message);
+            } finally {
+                predictBtn.disabled = false;
+                predictText.innerHTML = 'Predict Churn Risk';
+            }
+        }
+        
+        function displaySingleResult(result) {
+            const resultDiv = document.getElementById('singleResult');
+            const riskClass = result.risk_level.toLowerCase();
+            
+            resultDiv.innerHTML = `
+                <div class="result ${riskClass}">
+                    <h3>${result.risk_level} Risk Customer</h3>
+                    <p><strong>${result.recommendation}</strong></p>
+                    
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <h4>Churn Probability</h4>
+                            <div class="value">${(result.churn_probability * 100).toFixed(1)}%</div>
+                        </div>
+                        <div class="detail-item">
+                            <h4>Retention Probability</h4>
+                            <div class="value">${(result.retention_probability * 100).toFixed(1)}%</div>
+                        </div>
+                        <div class="detail-item">
+                            <h4>Confidence</h4>
+                            <div class="value">${result.confidence}</div>
+                        </div>
+                        <div class="detail-item">
+                            <h4>Action Priority</h4>
+                            <div class="value">${result.action_priority.replace('_', ' ')}</div>
+                        </div>
+                    </div>
+                    
+                    ${result.insights.length > 0 ? `
+                        <div class="insights">
+                            <h4>Key Insights:</h4>
+                            <ul>
+                                ${result.insights.map(insight => `<li>${insight}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // Batch prediction
+        async function processBatchData() {
+            const csvDataValue = csvData.value.trim();
+            if (!csvDataValue) {
+                alert('Please provide CSV data');
+                return;
+            }
+            
+            const batchBtn = document.getElementById('batchPredictBtn');
+            const batchText = document.getElementById('batchPredictText');
+            const resultDiv = document.getElementById('batchResult');
+            
+            batchBtn.disabled = true;
+            batchText.innerHTML = '<span class="loading"></span>Processing...';
+            resultDiv.innerHTML = '';
+            
+            try {
+                const customers = parseCSV(csvDataValue);
+                
+                const response = await fetch(`${API_BASE_URL}/batch_predict`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ customers })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayBatchResults(result);
+                } else {
+                    displayBatchError(result.error);
+                }
+            } catch (error) {
+                displayBatchError('Error processing data: ' + error.message);
+            } finally {
+                batchBtn.disabled = false;
+                batchText.innerHTML = 'Analyze Batch Data';
+            }
+        }
+        
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+            const customers = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const customer = {};
+                
+                headers.forEach((header, index) => {
+                    const value = values[index]?.trim();
+                    customer[header] = isNaN(value) ? value : Number(value);
+                });
+                
+                customers.push(customer);
+            }
+            
+            return customers;
+        }
+        
+        function displayBatchResults(result) {
+            const resultDiv = document.getElementById('batchResult');
+            
+            resultDiv.innerHTML = `
+                <div class="batch-results">
+                    <h3>Analysis Complete</h3>
+                    <p>Analyzed ${result.total_customers} customers</p>
+                    
+                    <div class="batch-summary">
+                        <div class="summary-card high">
+                            <h4>High Risk</h4>
+                            <div class="count">${result.risk_summary.High || 0}</div>
+                        </div>
+                        <div class="summary-card medium">
+                            <h4>Medium Risk</h4>
+                            <div class="count">${result.risk_summary.Medium || 0}</div>
+                        </div>
+                        <div class="summary-card low">
+                            <h4>Low Risk</h4>
+                            <div class="count">${result.risk_summary.Low || 0}</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="downloadResults('${JSON.stringify(result.results).replace(/'/g, "\\'")}')">
+                        Download Detailed Results
+                    </button>
+                </div>
+            `;
+        }
+        
+        function downloadResults(resultsJson) {
+            const results = JSON.parse(resultsJson);
+            let csvContent = 'Customer_ID,Risk_Level,Churn_Probability,Retention_Probability,Confidence,Recommendation\n';
+            
+            results.forEach(result => {
+                if (result.success) {
+                    csvContent += `${result.customer_id},${result.risk_level},${result.churn_probability},${result.retention_probability},${result.confidence},"${result.recommendation}"\n`;
+                }
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'churn_analysis_results.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+        
+        function displayError(error) {
+            document.getElementById('singleResult').innerHTML = `
+                <div class="error">
+                    <strong>Error:</strong> ${error}
+                </div>
+            `;
+        }
+        
+        function displayBatchError(error) {
+            document.getElementById('batchResult').innerHTML = `
+                <div class="error">
+                    <strong>Error:</strong> ${error}
+                </div>
+            `;
+        }
+        
+        // Load sample data
+        function loadSampleData() {
+            document.getElementById('tenure').value = 12;
+            document.getElementById('satisfaction').value = 3;
+            document.getElementById('orders').value = 6;
+            document.getElementById('appHours').value = 2.0;
+            document.getElementById('daysSince').value = 8;
+            document.getElementById('warehouse').value = 15;
+            document.getElementById('complain').value = 0;
+        }
+        
+        // Add sample data button
+        setTimeout(() => {
+            const form = document.getElementById('customerForm');
+            const sampleBtn = document.createElement('button');
+            sampleBtn.type = 'button';
+            sampleBtn.className = 'btn';
+            sampleBtn.style.background = 'rgba(102, 126, 234, 0.2)';
+            sampleBtn.style.color = '#333';
+            sampleBtn.style.marginRight = '15px';
+            sampleBtn.textContent = 'Load Sample Data';
+            sampleBtn.onclick = loadSampleData;
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
+            form.insertBefore(sampleBtn, submitBtn);
+        }, 100);
+    </script>
+</body>
+</html>
