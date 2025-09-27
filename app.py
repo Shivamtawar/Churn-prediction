@@ -122,7 +122,7 @@ def create_advanced_features(df):
 def load_model():
     """Load the trained model"""
     global model_package
-    model_files = ['improved_churn_model_v2.pkl', 'improved_churn_model.pkl', 'final_churn_model.pkl']
+    model_files = ['improved_churn_model_v2.pkl', 'improved_churn_model.pkl']
     
     for model_file in model_files:
         try:
