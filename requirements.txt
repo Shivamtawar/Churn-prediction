@@ -1,3 +1,4 @@
+--only-binary=:all:
 setuptools>=65.5.1
 wheel
 Flask==2.3.3
