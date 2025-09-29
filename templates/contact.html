@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - ChurnGuard{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-white">
+    <!-- Hero Section -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                Get in
+                <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Touch
+                </span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Have questions about ChurnGuard? Want to learn how we can help your business?
+                We'd love to hear from you.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-gray-50 rounded-3xl p-8 shadow-sm">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="firstName" class="block font-semibold text-gray-700">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg transition-all duration-300 bg-white text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="lastName" class="block font-semibold text-gray-700">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg transition-all duration-300 bg-white text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="email" class="block font-semibold text-gray-700">Email Address</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg transition-all duration-300 bg-white text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="company" class="block font-semibold text-gray-700">Company</label>
+                            <input type="text" id="company" name="company" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg transition-all duration-300 bg-white text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="subject" class="block font-semibold text-gray-700">Subject</label>
+                            <select id="subject" name="subject" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg transition-all duration-300 bg-white text-gray-900 focus:border-blue-500 focus:ring-4 focus:ring-blue-100">
+                                <option value="">Select a topic</option>
+                                <option value="demo">Request a Demo</option>
+                                <option value="pricing">Pricing Information</option>
+                                <option value="support">Technical Support</option>
+                                <option value="partnership">Partnership Inquiry</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="message" class="block font-semibold text-gray-700">Message</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg transition-all duration-300 bg-white text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 resize-none" placeholder="Tell us how we can help you..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none" id="submitBtn">
+                            <span id="submitText">Send Message</span>
+                        </button>
+                    </form>
+
+                    <div id="formResult" class="mt-6"></div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <!-- Contact Methods -->
+                    <div class="bg-gray-50 rounded-3xl p-8 shadow-sm">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-1">Email Us</h4>
+                                    <p class="text-gray-600">hello@churn-guard.com</p>
+                                    <p class="text-gray-600">support@churn-guard.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-1">Call Us</h4>
+                                    <p class="text-gray-600">+1 (555) 123-4567</p>
+                                    <p class="text-gray-200 text-sm">Mon-Fri 9AM-6PM EST</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-1">Visit Us</h4>
+                                    <p class="text-gray-600">123 AI Innovation Drive</p>
+                                    <p class="text-gray-600">Tech Valley, CA 94025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div class="bg-gray-50 rounded-3xl p-8 shadow-sm">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">Quick Answers</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">How quickly can I get started?</h4>
+                                <p class="text-gray-600">Most clients are up and running within 24-48 hours of signup.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">Do you offer training?</h4>
+                                <p class="text-gray-600">Yes, we provide comprehensive onboarding and training for your team.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-900 mb-2">What's your SLA?</h4>
+                                <p class="text-gray-600">We guarantee 99.9% uptime and sub-second response times.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="bg-white rounded-3xl p-8 shadow-sm text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Find Us</h2>
+                <p class="text-gray-600 mb-6">Located in the heart of Silicon Valley's innovation district</p>
+                <div class="bg-gray-100 rounded-2xl h-64 flex items-center justify-center">
+                    <div class="text-center">
+                        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                        </svg>
+                        <p class="text-gray-400">Interactive map would be embedded here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Contact form handling
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const resultDiv = document.getElementById('formResult');
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitText.innerHTML = '<span class="inline-block w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin mr-2"></span>Sending...';
+        resultDiv.innerHTML = '';
+
+        // Simulate form submission (replace with actual API call)
+        setTimeout(() => {
+            resultDiv.innerHTML = `
+                <div class="bg-green-500 text-white p-4 rounded-xl">
+                    <strong>Success!</strong> Thank you for your message. We'll get back to you within 24 hours.
+                </div>
+            `;
+            submitBtn.disabled = false;
+            submitText.innerHTML = 'Send Message';
+            e.target.reset();
+        }, 2000);
+    });
+</script>
+{% endblock %}

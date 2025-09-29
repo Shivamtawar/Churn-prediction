@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Customer Churn Prediction System{% endblock %}
+
+{% block content %}
+<div class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                    Predict & Prevent
+                    <span class="block bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                        Customer Churn
+                    </span>
+                </h1>
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Leverage AI-powered analytics to identify at-risk customers and implement proactive retention strategies.
+                    Boost your customer lifetime value by up to 300%.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/predict" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center">
+                        <span>Start Predicting</span>
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </a>
+                    <a href="#features" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-white bg-opacity-10 rounded-full blur-xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-32 h-32 bg-yellow-400 bg-opacity-20 rounded-full blur-2xl animate-pulse delay-1000"></div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white bg-opacity-5 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-md">
+                    <div class="text-4xl font-bold text-white mb-2">98%</div>
+                    <div class="text-blue-200">Prediction Accuracy</div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-md">
+                    <div class="text-4xl font-bold text-white mb-2">300%</div>
+                    <div class="text-blue-200">ROI Increase</div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-md">
+                    <div class="text-4xl font-bold text-white mb-2">50K+</div>
+                    <div class="text-blue-200">Customers Analyzed</div>
+                </div>
+                <div class="bg-white bg-opacity-10 rounded-2xl p-6 backdrop-blur-md">
+                    <div class="text-4xl font-bold text-white mb-2">24/7</div>
+                    <div class="text-blue-200">Real-time Analysis</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Powerful Features for
+                    <span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Smart Retention</span>
+                </h2>
+                <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                    Our AI-driven platform provides comprehensive customer insights to help you retain valuable customers.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white bg-opacity-10 rounded-3xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">AI-Powered Predictions</h3>
+                    <p class="text-blue-100 leading-relaxed">
+                        Advanced machine learning algorithms analyze customer behavior patterns to predict churn risk with high accuracy.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white bg-opacity-10 rounded-3xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Batch Processing</h3>
+                    <p class="text-blue-100 leading-relaxed">
+                        Process thousands of customers simultaneously with CSV upload and automated risk assessment reporting.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white bg-opacity-10 rounded-3xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Real-time Insights</h3>
+                    <p class="text-blue-100 leading-relaxed">
+                        Get instant risk assessments with actionable insights and personalized retention recommendations.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white bg-opacity-10 rounded-3xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Advanced Analytics</h3>
+                    <p class="text-blue-100 leading-relaxed">
+                        Comprehensive risk scoring with behavioral pattern analysis and predictive confidence metrics.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white bg-opacity-10 rounded-3xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Automated Reports</h3>
+                    <p class="text-blue-100 leading-relaxed">
+                        Generate detailed CSV reports with risk summaries and customer segmentation for strategic planning.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-white bg-opacity-10 rounded-3xl p-8 backdrop-blur-md hover:bg-opacity-20 transition-all duration-300 hover:transform hover:scale-105">
+                    <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Secure & Compliant</h3>
+                    <p class="text-blue-100 leading-relaxed">
+                        Enterprise-grade security with GDPR compliance and data privacy protection for customer information.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-700">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready to Reduce Customer Churn?
+            </h2>
+            <p class="text-xl text-blue-100 mb-8">
+                Join thousands of businesses using AI to improve customer retention and boost revenue.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/predict" class="bg-white text-gray-900 px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                    Get Started Free
+                </a>
+                <a href="/contact" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all duration-300">
+                    Contact Sales
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
